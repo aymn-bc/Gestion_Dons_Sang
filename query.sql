@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS centres_collecte (
 CREATE TABLE IF NOT EXISTS utilisateurs (
     id_utilisateur INT PRIMARY KEY AUTO_INCREMENT,
     role ENUM('Admin', 'Médecin', 'Secrétaire') NOT NULL,
+    nom_utilisateur VARCHAR(55) NOT NULL,
     id_centre INT NOT NULL,
     FOREIGN KEY (id_centre) REFERENCES centres_collecte(id_centre),
     password VARCHAR(255) NOT NULL

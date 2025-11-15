@@ -4,7 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 function check_authorization(array $allowed_roles) {
-    if (!isset($_SESSION['id_utilisateur']) || !isset($_SESSION['role'])) {
+    if (!isset($_SESSION['logged_in']) || !isset($_SESSION['role'])) {
         header('Location: login.php?error=not_logged_in');
         exit();
     }

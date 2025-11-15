@@ -3,13 +3,15 @@ USE don_sang;
 
 CREATE TABLE IF NOT EXISTS donneurs(
     id_donneur INT PRIMARY KEY AUTO_INCREMENT,
+    nom varchar(50) NOT NULL,
     cin VARCHAR(50) UNIQUE NOT NULL,
     groupe_sanguin ENUM('A', 'B', 'AB', 'O') NOT NULL,
     rhesus ENUM('-', '+') NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS centres_collecte (
-    id_centre INT PRIMARY KEY AUTO_INCREMENT
+    id_centre INT PRIMARY KEY AUTO_INCREMENT,
+    nom_centre varchar(100)
 );
 
 CREATE TABLE IF NOT EXISTS utilisateurs (
@@ -27,15 +29,14 @@ CREATE TABLE IF NOT EXISTS dons (
     id_centre INT NOT NULL,
     FOREIGN KEY (id_donneur) REFERENCES donneurs(id_donneur),
     FOREIGN KEY (id_centre) REFERENCES centres_collecte(id_centre),
-    status ENUM('EN STOCK', 'UTILISÉ', 'REJETÉ') NOT NULL
+    status ENUM('EN STOCK', 'UTILISÉ', 'REJETÉ') NOT NULL,
+    date DATE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS tests_don (
     id_test INT PRIMARY KEY AUTO_INCREMENT,
     id_don INT UNIQUE NOT NULL,
-    id_centre INT NOT NULL,
     FOREIGN KEY (id_don) REFERENCES dons(id_don),
-    FOREIGN KEY (id_centre) REFERENCES centres_collecte(id_centre),
     est_conforme BOOL NOT NULL
 );
 

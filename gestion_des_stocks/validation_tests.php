@@ -11,13 +11,13 @@ try {
     // 2. A. LISTE DES DONS À TESTER (Statut = 'EN STOCK')
     $stmt = $pdo->query("
         SELECT 
-            d.id_don, d.date_don, 
-            CONCAT(dn.nom, ' ', dn.prenom) AS donneur_nom, 
+            d.id_don, d.date, 
+            dn.nom AS donneur_nom, 
             dn.groupe_sanguin
         FROM dons d
         JOIN donneurs dn ON d.id_donneur = dn.id_donneur
         WHERE d.statut = 'EN STOCK'
-        ORDER BY d.date_don ASC
+        ORDER BY d.date ASC
     ");
     $dons_en_stock = $stmt->fetchAll();
 
@@ -56,10 +56,10 @@ try {
 
                 // Recharger la liste des dons en stock
                 $dons_en_stock = $pdo->query("
-                    SELECT d.id_don, d.date_don, CONCAT(dn.nom, ' ', dn.prenom) AS donneur_nom, dn.groupe_sanguin
+                    SELECT d.id_don, d.date ,dn.nom AS donneur_nom, dn.groupe_sanguin
                     FROM dons d JOIN donneurs dn ON d.id_donneur = dn.id_donneur
                     WHERE d.statut = 'EN STOCK'
-                    ORDER BY d.date_don ASC
+                    ORDER BY d.date  ASC
                 ")->fetchAll();
 
             } catch (PDOException $e) {
@@ -110,7 +110,7 @@ try {
                     <td><?= htmlspecialchars($don['id_don']) ?></td>
                     <td><?= htmlspecialchars($don['donneur_nom']) ?></td>
                     <td><?= htmlspecialchars($don['groupe_sanguin']) ?></td>
-                    <td><?= htmlspecialchars($don['date_don']) ?></td>
+                    <td><?= htmlspecialchars($don['date']) ?></td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openModal(<?= $don['id_don'] ?>)">
                             Valider Test

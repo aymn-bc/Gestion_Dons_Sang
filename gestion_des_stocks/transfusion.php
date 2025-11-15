@@ -11,13 +11,13 @@ try {
     // 2. A. LISTE DES DONS PRÊTS À ÊTRE TRANSFUSÉS (Statut = 'VALIDE')
     $stmt = $pdo->query("
         SELECT 
-            d.id_don, d.date_don, d.quantite_ml,
-            CONCAT(dn.nom, ' ', dn.prenom) AS donneur_nom, 
+            d.id_don, d.date,
+            dn.nom AS donneur_nom, 
             dn.groupe_sanguin
         FROM dons d
         JOIN donneurs dn ON d.id_donneur = dn.id_donneur
         WHERE d.statut = 'VALIDE'
-        ORDER BY d.date_don ASC
+        ORDER BY d.date ASC
     ");
     $dons_valides = $stmt->fetchAll();
 
@@ -54,10 +54,10 @@ try {
 
                 // Recharger la liste des dons valides
                 $dons_valides = $pdo->query("
-                    SELECT d.id_don, d.date_don, d.quantite_ml, CONCAT(dn.nom, ' ', dn.prenom) AS donneur_nom, dn.groupe_sanguin
+                    SELECT d.id_don, d.date ,dn.nom AS donneur_nom, dn.groupe_sanguin
                     FROM dons d JOIN donneurs dn ON d.id_donneur = dn.id_donneur
                     WHERE d.statut = 'VALIDE'
-                    ORDER BY d.date_don ASC
+                    ORDER BY d.date ASC
                 ")->fetchAll();
 
             } catch (PDOException $e) {
@@ -98,7 +98,6 @@ try {
                     <th>ID Don</th>
                     <th>Donneur</th>
                     <th>Groupe Sanguin</th>
-                    <th>Quantité (ml)</th>
                     <th>Date Don</th>
                     <th>Action</th>
                 </tr>
@@ -109,8 +108,7 @@ try {
                     <td><?= htmlspecialchars($don['id_don']) ?></td>
                     <td><?= htmlspecialchars($don['donneur_nom']) ?></td>
                     <td><?= htmlspecialchars($don['groupe_sanguin']) ?></td>
-                    <td><?= htmlspecialchars($don['quantite_ml']) ?></td>
-                    <td><?= htmlspecialchars($don['date_don']) ?></td>
+                    <td><?= htmlspecialchars($don['date']) ?></td>
                     <td>
                         <button type="button" class="btn btn-success" onclick="openModal(<?= $don['id_don'] ?>)">
                             Transfuser / Utiliser

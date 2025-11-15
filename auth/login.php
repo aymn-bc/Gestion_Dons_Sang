@@ -11,7 +11,7 @@
         $username = $_POST['username'] ?? "";
         $password = $_POST['password'] ?? "";
 
-        $sql = "select nom_utilisateur, password from utilisateurs where nom_utilisateur = :username";
+        $sql = "select nom_utilisateur, password, role from utilisateurs where nom_utilisateur = :username";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(":username", $username);
         $stmt->execute();
@@ -22,6 +22,7 @@
             if (password_verify($password, $user['password'])){
                 $_SESSION['logged_in'] = true;
                 $_SESSION['username'] = $username;
+                $_SESSION['role'] = $user['role'];
                 header('Location: dashboard.php');
                 exit;
             } else{

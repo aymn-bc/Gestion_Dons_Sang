@@ -2,7 +2,7 @@
 require_once 'config.php';
 require_once 'auth_check.php';
 
-check_authorization(['MEDECIN']);
+check_authorization(['Medecin']);
 
 $message_succes = '';
 $message_erreur = '';

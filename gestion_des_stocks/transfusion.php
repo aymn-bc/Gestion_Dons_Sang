@@ -2,7 +2,7 @@
 require_once 'config.php';
 require_once 'auth_check.php';
 
-check_authorization(['ADMIN']);
+check_authorization(['Admin']);
 
 $message_succes = '';
 $message_erreur = '';
